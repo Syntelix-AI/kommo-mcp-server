@@ -21,6 +21,14 @@ implementada em **uma sessão de agente** e virar, idealmente, **um único PR**.
 
 ## Índice
 
+**Épicos:** [E1 — Core MCP + CRM núcleo (M1)](./E1-core-mcp-crm-nucleo.md)
+
 | Spec | Épico | Título | Status |
 |------|-------|--------|--------|
-| _—_ | _—_ | _nenhuma spec ainda_ | _—_ |
+| [001](./001-bootstrap-monorepo.md) | E1 | Bootstrap do monorepo | Draft |
+| [002](./002-cliente-http-kommo.md) | E1 | Cliente HTTP do Kommo (core) | Draft |
+| [003](./003-servidor-mcp-base-stdio.md) | E1 | Servidor MCP base + stdio + conformidade | Draft |
+| [004](./004-tools-conta-pipelines.md) | E1 | Tools — Conta & Pipelines (somente leitura) | Draft |
+| [005](./005-tools-leads.md) | E1 | Tools — Leads (CRUD + mover etapa/pipeline) | Draft |
+| [006](./006-tools-contatos.md) | E1 | Tools — Contatos (CRUD) | Draft |
+| [007](./007-self-host-stdio-integracao.md) | E1 | Self-host stdio executável + integração de cliente | Draft |
