@@ -25,6 +25,14 @@ por Michael Nygard ([Documenting Architecture Decisions](https://cognitect.com/b
 
 | ADR | Título | Status |
 |-----|--------|--------|
-| _—_ | _nenhuma ADR aceita ainda_ | _—_ |
+| [0001](./0001-linguagem-e-runtime.md) | Linguagem & runtime — TypeScript sobre Node.js | Accepted |
+| [0002](./0002-topologia-de-execucao.md) | Topologia de execução — "Node único" | Accepted |
+| [0003](./0003-transporte-e-sdk-mcp.md) | Transporte & SDK MCP — SDK oficial com stdio + Streamable HTTP | Accepted |
+| [0004](./0004-estrutura-do-repositorio.md) | Estrutura do repositório — monorepo pnpm (core / cli / server) | Accepted |
+| [0005](./0005-porta-e-configuracao.md) | Porta padrão & configuração do servidor web | Accepted |
+| [0006](./0006-reverse-proxy-e-https.md) | Reverse proxy & HTTPS — Caddy provisionado pelo wizard + BYO | Accepted |
+| [0007](./0007-autenticacao-camada-remota.md) | Autenticação da camada remota — bearer obrigatório; OAuth só no managed | Accepted |
+| [0008](./0008-armazenamento-seguro-do-token.md) | Armazenamento seguro do token no self-host | Accepted |
+| [0009](./0009-licenca-e-sustentabilidade.md) | Licença & sustentabilidade — MIT | Accepted |
 
 > Atualize esta tabela a cada nova ADR.
