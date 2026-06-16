@@ -22,13 +22,31 @@ PRD  ──►  ADRs  ──►  Specs  ──►  PRs
 4. Implemente respeitando os **objetivos e não-objetivos** da spec.
 5. Abra um PR usando o template. Referencie a spec/ADR/issue.
 
+## Ambiente local
+
+Este repositório é um monorepo pnpm. Use Node.js 22 (veja `.nvmrc`) e ative o
+pnpm via Corepack antes de instalar dependências:
+
+```bash
+corepack enable
+pnpm install
+```
+
+Comandos principais:
+
+```bash
+pnpm typecheck
+pnpm lint
+pnpm test
+pnpm build
+```
+
+Para rodar os scripts por pacote, use os comandos recursivos do pnpm, por
+exemplo `pnpm -r build` ou `pnpm -r typecheck`.
+
 ## Convenções
 
 - **Commits:** [Conventional Commits](https://www.conventionalcommits.org/)
   (`feat:`, `fix:`, `docs:`, `refactor:`, `chore:`, `test:`).
 - **Branches:** `feat/…`, `fix/…`, `docs/…`, `chore/…`.
 - **Segredos:** nunca commitar `.env`, tokens ou API keys. Use `.env.example`.
-
-> Scripts de build/lint/test serão definidos pelas primeiras specs de
-> infraestrutura. Até lá, este documento descreve o **processo**, não promete
-> ferramentas que ainda não existem.
