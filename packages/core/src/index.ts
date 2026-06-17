@@ -1,17 +1,31 @@
-export type PackageRole = "core" | "cli" | "server";
+/**
+ * `@syntelix/kommo-mcp-core` — domínio/cliente Kommo + contratos de tools.
+ *
+ * Sem dependência de transporte MCP (ADR-0004): este pacote é consumido tanto pelo
+ * `cli` (stdio) quanto pelo `server` (HTTP, Fase 2).
+ */
 
-export interface PackageIdentity<Role extends PackageRole = PackageRole> {
-  name: "kommo-mcp-server";
-  role: Role;
-  version: "0.0.0";
-}
+export type { KommoConfig } from "./config.js";
+export { KOMMO_ENV, loadKommoConfig } from "./config.js";
 
-export function createPackageIdentity<Role extends PackageRole>(
-  role: Role
-): PackageIdentity<Role> {
-  return {
-    name: "kommo-mcp-server",
-    role,
-    version: "0.0.0"
-  };
-}
+export {
+  KommoConfigError,
+  KommoNetworkError,
+  KommoAuthError,
+  KommoNotFoundError,
+  KommoValidationError,
+  KommoRateLimitError,
+  KommoUnexpectedHttpError,
+  mapHttpStatusToError
+} from "./errors.js";
+export type { KommoHttpError } from "./errors.js";
+
+export type { FetchLike, KommoRequestOptions } from "./http-client.js";
+export { createKommoHttpClient, KommoHttpClient } from "./http-client.js";
+
+export type { HalResource, HalLinks, HalCollection, PaginateOptions } from "./hal.js";
+export { paginateHal } from "./hal.js";
+
+// Mantém a identidade de pacote usada pelo bootstrap (spec 001) — sem quebrar cli/server.
+export type { PackageRole, PackageIdentity } from "./identity.js";
+export { createPackageIdentity } from "./identity.js";
