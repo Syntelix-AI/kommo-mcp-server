@@ -1,7 +1,7 @@
 # Spec 005: Tools — Leads (CRUD + mover etapa/pipeline)
 
 - **Épico:** E1 — Core MCP + CRM núcleo (M1)
-- **Status:** Draft
+- **Status:** In progress
 - **Relacionada a:** PRD §5.2 (núcleo), §5.3; ADR-0003
 - **Estimativa:** L
 
@@ -35,27 +35,27 @@ conversacional ao produto.
 
 ## Tarefas
 
-- [ ] `list_leads` — filtros úteis (query, pipeline/status, paginação); resultado
+- [x] `list_leads` — filtros úteis (query, pipeline/status, paginação); resultado
   enxuto (id, nome, preço, status/pipeline, responsável).
-- [ ] `get_lead` — detalhe de um lead por id (com `with` relevante).
-- [ ] `create_lead` — cria com campos básicos (nome, preço, pipeline/status,
+- [x] `get_lead` — detalhe de um lead por id (com `with` relevante).
+- [x] `create_lead` — cria com campos básicos (nome, preço, pipeline/status,
   responsável); retorna o id criado.
-- [ ] `update_lead` — atualiza campos básicos por id.
-- [ ] `move_lead` — move etapa/pipeline com validação de coerência etapa↔pipeline.
-- [ ] Anotações corretas por tool; `inputSchema` validado.
-- [ ] Testes com Kommo mockado: cada operação, erro 422 de validação → `isError`,
+- [x] `update_lead` — atualiza campos básicos por id.
+- [x] `move_lead` — move etapa/pipeline com validação de coerência etapa↔pipeline.
+- [x] Anotações corretas por tool; `inputSchema` validado.
+- [x] Testes com Kommo mockado: cada operação, erro 422 de validação → `isError`,
   e o caso de etapa incompatível em `move_lead`.
 
 ## Critérios de aceite (testáveis)
 
-- [ ] `list_leads` pagina e filtra; retorna a forma enxuta esperada.
-- [ ] `create_lead` cria e retorna o id; o lead aparece num `get_lead` subsequente
+- [x] `list_leads` pagina e filtra; retorna a forma enxuta esperada.
+- [x] `create_lead` cria e retorna o id; o lead aparece num `get_lead` subsequente
   (no mock/sandbox).
-- [ ] `update_lead` altera um campo e o resultado reflete a mudança.
-- [ ] `move_lead` move o lead para outra etapa **e** outro pipeline com sucesso.
-- [ ] `move_lead` com etapa que não pertence ao pipeline retorna `isError` com
+- [x] `update_lead` altera um campo e o resultado reflete a mudança.
+- [x] `move_lead` move o lead para outra etapa **e** outro pipeline com sucesso.
+- [x] `move_lead` com etapa que não pertence ao pipeline retorna `isError` com
   mensagem explicativa (não tenta a chamada inválida).
-- [ ] Anotações por tool corretas em `tools/list`.
+- [x] Anotações por tool corretas em `tools/list`.
 - [ ] Validado em cliente MCP real: a IA cria um lead e o move de etapa por
   instrução em linguagem natural.
 

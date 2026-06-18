@@ -1,7 +1,7 @@
 # Spec 003: Servidor MCP base + stdio + conformidade
 
 - **Épico:** E1 — Core MCP + CRM núcleo (M1)
-- **Status:** Draft
+- **Status:** Done
 - **Relacionada a:** PRD §5.3, §3.1 (obj. 1); ADR-0001, ADR-0002, ADR-0003
 - **Estimativa:** M
 
@@ -34,27 +34,27 @@ protocolo correta — o "shell" no qual as tools das specs 004-006 plugam.
 
 ## Tarefas
 
-- [ ] Inicializar o servidor MCP do SDK no pacote `cli` (entry stdio), consumindo
-  `core`.
-- [ ] Definir a interface/contrato de uma "tool" (nome, title, inputSchema,
-  anotações, handler) e um registry que o servidor percorre.
-- [ ] Implementar o adaptador de erro: erro de tool (negócio/validação do Kommo) →
-  `isError: true`; falha de protocolo → JSON-RPC `error`.
-- [ ] Registrar uma tool trivial de saúde (ex.: `ping`/`whoami` sem efeito) para
-  validar o caminho fim-a-fim do framework.
-- [ ] Testes: `initialize` retorna `capabilities` no formato correto; `tools/list`
-  lista a tool de saúde com anotações; um erro de handler vira `isError: true`.
+- [x] Inicializar o servidor MCP do SDK no pacote `cli` (entry stdio), consumindo
+      `core`.
+- [x] Definir a interface/contrato de uma "tool" (nome, title, inputSchema,
+      anotações, handler) e um registry que o servidor percorre.
+- [x] Implementar o adaptador de erro: erro de tool (negócio/validação do Kommo) →
+      `isError: true`; falha de protocolo → JSON-RPC `error`.
+- [x] Registrar uma tool trivial de saúde (ex.: `ping`/`whoami` sem efeito) para
+      validar o caminho fim-a-fim do framework.
+- [x] Testes: `initialize` retorna `capabilities` no formato correto; `tools/list`
+      lista a tool de saúde com anotações; um erro de handler vira `isError: true`.
 
 ## Critérios de aceite (testáveis)
 
-- [ ] Um cliente MCP (ou harness de teste) completa `initialize`/`initialized` e
-  recebe `capabilities` com `tools` aninhado corretamente.
-- [ ] `tools/list` retorna a tool de saúde com `title`, `inputSchema` e anotações.
-- [ ] `tools/call` na tool de saúde retorna sucesso.
-- [ ] Um handler que lança erro de negócio responde com `result.isError === true` e
-  mensagem legível — **não** derruba a conexão nem vira `error` de protocolo.
-- [ ] Conectado via stdio a um cliente MCP real (ex.: Claude Desktop), o servidor
-  aparece e a tool de saúde executa.
+- [x] Um cliente MCP (ou harness de teste) completa `initialize`/`initialized` e
+      recebe `capabilities` com `tools` aninhado corretamente.
+- [x] `tools/list` retorna a tool de saúde com `title`, `inputSchema` e anotações.
+- [x] `tools/call` na tool de saúde retorna sucesso.
+- [x] Um handler que lança erro de negócio responde com `result.isError === true` e
+      mensagem legível — **não** derruba a conexão nem vira `error` de protocolo.
+- [x] Conectado via stdio a um cliente MCP real (ex.: Claude Desktop), o servidor
+      aparece e a tool de saúde executa.
 
 ## Fora de escopo / riscos
 

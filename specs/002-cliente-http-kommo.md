@@ -1,7 +1,7 @@
 # Spec 002: Cliente HTTP do Kommo (core)
 
 - **Épico:** E1 — Core MCP + CRM núcleo (M1)
-- **Status:** Draft
+- **Status:** Done
 - **Relacionada a:** PRD §5.2, §7; ADR-0001, ADR-0004, ADR-0008
 - **Estimativa:** M
 
@@ -32,26 +32,26 @@ rate limit e mapeamento de erros. É a camada que todas as tools consomem.
 
 ## Tarefas
 
-- [ ] Leitura/validação da config (`subdomain`, `token`) a partir do ambiente.
-- [ ] Wrapper HTTP base: baseURL, headers de auth, timeout, parsing de JSON/HAL.
-- [ ] Helper de paginação que itera `_embedded` por páginas até o fim ou um limite.
-- [ ] Mapeamento de erros: distinguir erro de **autenticação** (401/403), **não
-  encontrado** (404), **validação** (400/422) e **rate limit** (429) em tipos de
-  erro internos consumíveis pela camada de tools.
-- [ ] Tratamento de `429` com `Retry-After`/backoff.
-- [ ] Testes unitários com HTTP mockado (sucesso, 401, 404, 422, 429, paginação).
+- [x] Leitura/validação da config (`subdomain`, `token`) a partir do ambiente.
+- [x] Wrapper HTTP base: baseURL, headers de auth, timeout, parsing de JSON/HAL.
+- [x] Helper de paginação que itera `_embedded` por páginas até o fim ou um limite.
+- [x] Mapeamento de erros: distinguir erro de **autenticação** (401/403), **não
+      encontrado** (404), **validação** (400/422) e **rate limit** (429) em tipos de
+      erro internos consumíveis pela camada de tools.
+- [x] Tratamento de `429` com `Retry-After`/backoff.
+- [x] Testes unitários com HTTP mockado (sucesso, 401, 404, 422, 429, paginação).
 
 ## Critérios de aceite (testáveis)
 
-- [ ] Com env válido, uma chamada `GET account` retorna o objeto da conta tipado.
-- [ ] Sem `KOMMO_ACCESS_TOKEN`/`KOMMO_SUBDOMAIN`, o cliente falha com mensagem
-  acionável (não stack trace cru).
-- [ ] O helper de paginação concatena corretamente múltiplas páginas de `_embedded`
-  (testado com 2+ páginas mockadas).
-- [ ] Respostas 401/404/422/429 são mapeadas para os tipos de erro esperados
-  (asserções unitárias).
-- [ ] Um `429` com `Retry-After` dispara retry e eventual sucesso no mock.
-- [ ] Nenhum segredo é logado.
+- [x] Com env válido, uma chamada `GET account` retorna o objeto da conta tipado.
+- [x] Sem `KOMMO_ACCESS_TOKEN`/`KOMMO_SUBDOMAIN`, o cliente falha com mensagem
+      acionável (não stack trace cru).
+- [x] O helper de paginação concatena corretamente múltiplas páginas de `_embedded`
+      (testado com 2+ páginas mockadas).
+- [x] Respostas 401/404/422/429 são mapeadas para os tipos de erro esperados
+      (asserções unitárias).
+- [x] Um `429` com `Retry-After` dispara retry e eventual sucesso no mock.
+- [x] Nenhum segredo é logado.
 
 ## Fora de escopo / riscos
 
