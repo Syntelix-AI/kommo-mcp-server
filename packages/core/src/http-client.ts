@@ -3,6 +3,7 @@ import {
   KommoRateLimitError,
   mapHttpStatusToError
 } from "./errors.js";
+import { KOMMO_API_CONTRACT, buildKommoApiBaseUrl } from "./api-contract.js";
 
 /**
  * Função `fetch` injetável. Default: a global `fetch` do Node 22+.
@@ -25,6 +26,12 @@ interface KommoHttpClientOptions {
   readonly baseUrl: string;
   /** Token de longa duração (Bearer). */
   readonly accessToken: string;
+  /** Opções de runtime injetáveis para teste/controle operacional. */
+  readonly runtime?: KommoHttpClientRuntimeOptions;
+}
+
+/** Opções de runtime do cliente HTTP que não fazem parte da credencial/base URL. */
+export interface KommoHttpClientRuntimeOptions {
   /** `fetch` injetável (default: global). */
   readonly fetch?: FetchLike;
   /** Tempo limite por requisição (default 30s). */
@@ -39,13 +46,10 @@ interface KommoHttpClientOptions {
 export function createKommoHttpClient(
   subdomain: string,
   accessToken: string,
-  options: Pick<
-    KommoHttpClientOptions,
-    "fetch" | "defaultTimeoutMs" | "maxRetries" | "sleep"
-  > = {}
+  options: KommoHttpClientRuntimeOptions = {}
 ): KommoHttpClient {
-  const baseUrl = `https://${subdomain}.kommo.com/api/v4`;
-  return new KommoHttpClient({ ...options, baseUrl, accessToken });
+  const baseUrl = buildKommoApiBaseUrl(subdomain);
+  return new KommoHttpClient({ baseUrl, accessToken, runtime: options });
 }
 
 /**
@@ -64,12 +68,13 @@ export class KommoHttpClient {
   private readonly sleep: (ms: number) => Promise<void>;
 
   constructor(options: KommoHttpClientOptions) {
+    const runtime = options.runtime ?? {};
     this.baseUrl = options.baseUrl.replace(/\/$/, "");
     this.accessToken = options.accessToken;
-    this.fetchFn = options.fetch ?? fetch;
-    this.defaultTimeoutMs = options.defaultTimeoutMs ?? 30_000;
-    this.maxRetries = options.maxRetries ?? 3;
-    this.sleep = options.sleep ?? defaultSleep;
+    this.fetchFn = runtime.fetch ?? fetch;
+    this.defaultTimeoutMs = runtime.defaultTimeoutMs ?? 30_000;
+    this.maxRetries = runtime.maxRetries ?? 3;
+    this.sleep = runtime.sleep ?? defaultSleep;
   }
 
   async get<T>(path: string, options: KommoRequestOptions = {}): Promise<T> {
@@ -166,12 +171,12 @@ export class KommoHttpClient {
 
   private buildHeaders(hasBody: boolean): Record<string, string> {
     const headers: Record<string, string> = {
-      Accept: "application/json",
-      Authorization: `Bearer ${this.accessToken}`,
-      "User-Agent": "kommo-mcp-server/0.0.0"
+      Accept: KOMMO_API_CONTRACT.transport.defaultAccept,
+      Authorization: `${KOMMO_API_CONTRACT.transport.authScheme} ${this.accessToken}`,
+      "User-Agent": KOMMO_API_CONTRACT.transport.userAgent
     };
     if (hasBody) {
-      headers["Content-Type"] = "application/json";
+      headers["Content-Type"] = KOMMO_API_CONTRACT.transport.jsonContentType;
     }
     return headers;
   }

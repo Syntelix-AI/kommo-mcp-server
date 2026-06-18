@@ -48,4 +48,16 @@ describe("loadKommoConfig", () => {
       })
     ).toThrow(KommoConfigError);
   });
+
+  it("does not expose the access token when reporting invalid config", () => {
+    const secret = "token-super-secreto";
+    try {
+      loadKommoConfig({
+        [KOMMO_ENV.subdomain]: "https://evil.com",
+        [KOMMO_ENV.accessToken]: secret
+      });
+    } catch (error) {
+      expect((error as Error).message).not.toContain(secret);
+    }
+  });
 });
