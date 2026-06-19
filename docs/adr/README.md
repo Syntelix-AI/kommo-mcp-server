@@ -34,5 +34,6 @@ por Michael Nygard ([Documenting Architecture Decisions](https://cognitect.com/b
 | [0007](./0007-autenticacao-camada-remota.md) | Autenticação da camada remota — bearer obrigatório; OAuth só no managed | Accepted |
 | [0008](./0008-armazenamento-seguro-do-token.md) | Armazenamento seguro do token no self-host | Accepted |
 | [0009](./0009-licenca-e-sustentabilidade.md) | Licença & sustentabilidade — MIT | Accepted |
+| [0010](./0010-ci-estrategia-e-roadmap.md) | CI — pipeline mínima e roadmap de evolução | Accepted |
 
 > Atualize esta tabela a cada nova ADR.
