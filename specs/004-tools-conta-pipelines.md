@@ -1,7 +1,7 @@
 # Spec 004: Tools — Conta & Pipelines (somente leitura)
 
 - **Épico:** E1 — Core MCP + CRM núcleo (M1)
-- **Status:** Draft
+- **Status:** Done
 - **Relacionada a:** PRD §5.2, §5.3; ADR-0003
 - **Estimativa:** S
 
@@ -26,21 +26,21 @@ cliente (spec 002) fim-a-fim com baixo risco (sem escrita).
 
 ## Tarefas
 
-- [ ] Tool `get_account` — retorna dados essenciais da conta (id, nome, subdomínio,
-  moeda, fuso, etc.) de forma enxuta para o modelo.
-- [ ] Tool `list_pipelines` — lista pipelines com suas etapas (id, nome, ordem,
-  tipo), de forma que o modelo consiga mapear nomes → ids para a spec 005.
-- [ ] `inputSchema` válido (mesmo que vazio/poucos filtros) e anotações corretas.
-- [ ] Testes com Kommo mockado: forma do resultado, anotações, erro 401 → `isError`.
+- [x] Tool `get_account` — retorna dados essenciais da conta (id, nome, subdomínio,
+      moeda, fuso, etc.) de forma enxuta para o modelo.
+- [x] Tool `list_pipelines` — lista pipelines com suas etapas (id, nome, ordem,
+      tipo), de forma que o modelo consiga mapear nomes → ids para a spec 005.
+- [x] `inputSchema` válido (mesmo que vazio/poucos filtros) e anotações corretas.
+- [x] Testes com Kommo mockado: forma do resultado, anotações, erro 401 → `isError`.
 
 ## Critérios de aceite (testáveis)
 
-- [ ] `get_account` retorna o objeto da conta com os campos essenciais.
-- [ ] `list_pipelines` retorna pipelines **e** suas etapas, com ids utilizáveis.
-- [ ] Ambas declaram `readOnlyHint: true` em `tools/list`.
-- [ ] Token inválido resulta em `result.isError === true` com mensagem clara.
-- [ ] Validado em um cliente MCP real: a IA consegue responder "quais são meus
-  pipelines e etapas?".
+- [x] `get_account` retorna o objeto da conta com os campos essenciais.
+- [x] `list_pipelines` retorna pipelines **e** suas etapas, com ids utilizáveis.
+- [x] Ambas declaram `readOnlyHint: true` em `tools/list`.
+- [x] Token inválido resulta em `result.isError === true` com mensagem clara.
+- [x] Validado em um cliente MCP real: a IA consegue responder "quais são meus
+      pipelines e etapas?".
 
 ## Fora de escopo / riscos
 

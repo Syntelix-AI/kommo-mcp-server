@@ -1,7 +1,7 @@
 # Spec 001: Bootstrap do monorepo
 
 - **Épico:** E1 — Core MCP + CRM núcleo (M1)
-- **Status:** Draft
+- **Status:** Done
 - **Relacionada a:** PRD §7; ADR-0001, ADR-0004
 - **Estimativa:** M
 
@@ -32,26 +32,26 @@ a qual todas as demais specs do M1 são construídas.
 
 ## Tarefas
 
-- [ ] `pnpm-workspace.yaml` + `package.json` raiz com `packageManager` e scripts
-  agregados (`build`, `lint`, `test`, `typecheck`).
-- [ ] Criar `packages/core`, `packages/cli`, `packages/server` com `package.json` e
-  `tsconfig` próprios; `cli`/`server` referenciam `core` via `workspace:*`.
-- [ ] `tsconfig` base compartilhado (strict mode ligado) + por-pacote.
-- [ ] Lint + format (config única na raiz) e um runner de testes configurado.
-- [ ] CI (GitHub Actions) rodando `install → typecheck → lint → test → build` com
-  Corepack/pnpm.
-- [ ] Atualizar `CONTRIBUTING.md` com o passo `corepack enable` + comandos pnpm.
-- [ ] Garantir `.gitignore` cobrindo artefatos de build e segredos (`.env`).
+- [x] `pnpm-workspace.yaml` + `package.json` raiz com `packageManager` e scripts
+      agregados (`build`, `lint`, `test`, `typecheck`).
+- [x] Criar `packages/core`, `packages/cli`, `packages/server` com `package.json` e
+      `tsconfig` próprios; `cli`/`server` referenciam `core` via `workspace:*`.
+- [x] `tsconfig` base compartilhado (strict mode ligado) + por-pacote.
+- [x] Lint + format (config única na raiz) e um runner de testes configurado.
+- [x] CI (GitHub Actions) rodando `install → typecheck → lint → test → build` com
+      Corepack/pnpm.
+- [x] Atualizar `CONTRIBUTING.md` com o passo `corepack enable` + comandos pnpm.
+- [x] Garantir `.gitignore` cobrindo artefatos de build e segredos (`.env`).
 
 ## Critérios de aceite (testáveis)
 
-- [ ] `pnpm install` na raiz resolve os três pacotes sem erro.
-- [ ] `pnpm -r build` compila os três pacotes; `pnpm -r typecheck` passa em strict.
-- [ ] `pnpm lint` e `pnpm test` rodam (mesmo com suíte mínima/placeholder) e passam.
-- [ ] `cli` e `server` conseguem importar um símbolo exportado por `core`
-  (valida o `workspace:*`).
-- [ ] O pipeline de CI roda verde em um PR.
-- [ ] CONTRIBUTING documenta Corepack/pnpm e os scripts.
+- [x] `pnpm install` na raiz resolve os três pacotes sem erro.
+- [x] `pnpm -r build` compila os três pacotes; `pnpm -r typecheck` passa em strict.
+- [x] `pnpm lint` e `pnpm test` rodam (mesmo com suíte mínima/placeholder) e passam.
+- [x] `cli` e `server` conseguem importar um símbolo exportado por `core`
+      (valida o `workspace:*`).
+- [x] O pipeline de CI roda verde em um PR.
+- [x] CONTRIBUTING documenta Corepack/pnpm e os scripts.
 
 ## Fora de escopo / riscos
 

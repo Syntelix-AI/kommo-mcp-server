@@ -20,10 +20,10 @@
 
 Caminho do DoD mínimo (este épico):
 
-- [ ] **Spec 001** — Bootstrap do monorepo (pnpm, TS, lint, test, CI, skeletons)
-- [ ] **Spec 002** — Cliente HTTP do Kommo (`core`): auth por token, paginação, erros
-- [ ] **Spec 003** — Servidor MCP base + stdio + conformidade (capabilities, erros, anotações)
-- [ ] **Spec 004** — Tools: Conta & Pipelines (somente leitura)
+- [x] **Spec 001** — Bootstrap do monorepo (pnpm, TS, lint, test, CI, skeletons)
+- [x] **Spec 002** — Cliente HTTP do Kommo (`core`): auth por token, paginação, erros
+- [x] **Spec 003** — Servidor MCP base + stdio + conformidade (capabilities, erros, anotações)
+- [x] **Spec 004** — Tools: Conta & Pipelines (somente leitura)
 - [ ] **Spec 005** — Tools: Leads (listar/obter/criar/atualizar/mover etapa e pipeline)
 - [ ] **Spec 006** — Tools: Contatos (listar/obter/criar/atualizar)
 - [ ] **Spec 007** — Self-host stdio executável + integração de cliente (fecha o DoD)
