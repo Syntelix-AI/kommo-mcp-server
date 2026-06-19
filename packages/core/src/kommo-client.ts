@@ -259,6 +259,14 @@ export class KommoClient {
     );
     return firstEmbeddedItem(response, operation.embeddedKey, "contato criado");
   }
+
+  async updateContact(id: number, input: UpdateContactInput): Promise<KommoContact> {
+    const operation = KOMMO_API_CONTRACT.operations.updateContact;
+    return this.httpClient.patch<KommoContact>(
+      renderKommoApiPath(operation.path, { id }),
+      toKommoContactPayload(input)
+    );
+  }
 }
 
 /** Cria o cliente Kommo a partir de uma config já validada. */

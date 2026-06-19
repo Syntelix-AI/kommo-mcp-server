@@ -117,4 +117,22 @@ describe("KommoClient contacts", () => {
       }
     ]);
   });
+
+  it("updates a contact name via PATCH", async () => {
+    const fetchMock = mockFetch([
+      jsonResponse(200, { id: 88, name: "Novo Nome" })
+    ]);
+    const client = createKommoClient(
+      { subdomain: "acme", accessToken: "token" },
+      { fetch: fetchMock }
+    );
+
+    const contact = await client.updateContact(88, { name: "Novo Nome" });
+
+    expect(contact).toMatchObject({ id: 88, name: "Novo Nome" });
+    expect(fetchMock.calls[0]?.init?.method).toBe("PATCH");
+    expect(fetchMock.calls[0]?.url).toContain("/api/v4/contacts/88");
+    const body = JSON.parse(String(fetchMock.calls[0]?.init?.body));
+    expect(body).toEqual({ name: "Novo Nome" });
+  });
 });
