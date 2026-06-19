@@ -23,5 +23,8 @@
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.0.0",
     "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "@sentry/node": "^10.58.0"
   }
 }
