@@ -250,6 +250,15 @@ export class KommoClient {
       query === undefined ? {} : { query }
     );
   }
+
+  async createContact(input: CreateContactInput): Promise<KommoContact> {
+    const operation = KOMMO_API_CONTRACT.operations.createContacts;
+    const response = await this.httpClient.post<HalCollection<KommoContact>>(
+      operation.path,
+      [toKommoContactPayload(input)]
+    );
+    return firstEmbeddedItem(response, operation.embeddedKey, "contato criado");
+  }
 }
 
 /** Cria o cliente Kommo a partir de uma config já validada. */
@@ -331,6 +340,47 @@ function toKommoLeadPayload(
   }
   if (input.responsibleUserId !== undefined) {
     payload.responsible_user_id = input.responsibleUserId;
+  }
+  return payload;
+}
+
+interface KommoContactPayload {
+  name?: string;
+  first_name?: string;
+  last_name?: string;
+  responsible_user_id?: number;
+  custom_fields_values?: Array<{
+    field_code: string;
+    values: Array<{ value: string }>;
+  }>;
+}
+
+function toKommoContactPayload(
+  input: CreateContactInput | UpdateContactInput
+): KommoContactPayload {
+  const payload: KommoContactPayload = {};
+  if (input.name !== undefined) {
+    payload.name = input.name;
+  }
+  if (input.firstName !== undefined) {
+    payload.first_name = input.firstName;
+  }
+  if (input.lastName !== undefined) {
+    payload.last_name = input.lastName;
+  }
+  if (input.responsibleUserId !== undefined) {
+    payload.responsible_user_id = input.responsibleUserId;
+  }
+
+  const customFields: KommoContactPayload["custom_fields_values"] = [];
+  if (input.phone !== undefined) {
+    customFields.push({ field_code: "PHONE", values: [{ value: input.phone }] });
+  }
+  if (input.email !== undefined) {
+    customFields.push({ field_code: "EMAIL", values: [{ value: input.email }] });
+  }
+  if (customFields.length > 0) {
+    payload.custom_fields_values = customFields;
   }
   return payload;
 }

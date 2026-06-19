@@ -75,4 +75,46 @@ describe("KommoClient contacts", () => {
     });
     expect(fetchMock.calls[0]?.url).toContain("/api/v4/contacts/42");
   });
+
+  it("creates a contact with name, phone and email and returns it", async () => {
+    const fetchMock = mockFetch([
+      jsonResponse(200, {
+        _embedded: {
+          contacts: [
+            {
+              id: 77,
+              name: "Diana",
+              custom_fields_values: [
+                { field_code: "PHONE", values: [{ value: "+5511999990000" }] },
+                { field_code: "EMAIL", values: [{ value: "diana@exemplo.com" }] }
+              ]
+            }
+          ]
+        }
+      })
+    ]);
+    const client = createKommoClient(
+      { subdomain: "acme", accessToken: "token" },
+      { fetch: fetchMock }
+    );
+
+    const contact = await client.createContact({
+      name: "Diana",
+      phone: "+5511999990000",
+      email: "diana@exemplo.com"
+    });
+
+    expect(contact).toMatchObject({ id: 77, name: "Diana" });
+    expect(fetchMock.calls[0]?.init?.method).toBe("POST");
+    const body = JSON.parse(String(fetchMock.calls[0]?.init?.body));
+    expect(body).toEqual([
+      {
+        name: "Diana",
+        custom_fields_values: [
+          { field_code: "PHONE", values: [{ value: "+5511999990000" }] },
+          { field_code: "EMAIL", values: [{ value: "diana@exemplo.com" }] }
+        ]
+      }
+    ]);
+  });
 });
