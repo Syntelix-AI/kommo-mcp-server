@@ -59,4 +59,20 @@ describe("KommoClient contacts", () => {
     expect(firstUrl.pathname).toBe("/api/v4/contacts");
     expect(firstUrl.searchParams.get("query")).toBe("a");
   });
+
+  it("gets a contact by id", async () => {
+    const fetchMock = mockFetch([
+      jsonResponse(200, { id: 42, name: "Carlos" })
+    ]);
+    const client = createKommoClient(
+      { subdomain: "acme", accessToken: "token" },
+      { fetch: fetchMock }
+    );
+
+    await expect(client.getContact(42)).resolves.toMatchObject({
+      id: 42,
+      name: "Carlos"
+    });
+    expect(fetchMock.calls[0]?.url).toContain("/api/v4/contacts/42");
+  });
 });

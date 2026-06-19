@@ -241,6 +241,15 @@ export class KommoClient {
       paginateOptions
     );
   }
+
+  async getContact(id: number, withParam?: string): Promise<KommoContact> {
+    const operation = KOMMO_API_CONTRACT.operations.getContact;
+    const query = withParam === undefined ? undefined : { with: withParam };
+    return this.httpClient.get<KommoContact>(
+      renderKommoApiPath(operation.path, { id }),
+      query === undefined ? {} : { query }
+    );
+  }
 }
 
 /** Cria o cliente Kommo a partir de uma config já validada. */
