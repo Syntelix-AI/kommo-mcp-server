@@ -19,6 +19,8 @@ export type {
 } from "./business-tools.js";
 export { createLeadTools, summarizeLead } from "./lead-tools.js";
 export type { LeadClient, LeadClientProvider, LeadSummary } from "./lead-tools.js";
+export { createContactTools, summarizeContact } from "./contact-tools.js";
+export type { ContactClient, ContactClientProvider, ContactSummary } from "./contact-tools.js";
 export {
   createDefaultToolRegistry,
   createKommoMcpServer,
