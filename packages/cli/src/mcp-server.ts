@@ -5,6 +5,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { createPackageIdentity } from "@syntelix/kommo-mcp-core";
 
 import { createAccountPipelineTools } from "./business-tools.js";
+import { createContactTools } from "./contact-tools.js";
 import { createLeadTools } from "./lead-tools.js";
 
 import type {
@@ -115,7 +116,8 @@ export function createDefaultToolRegistry(
   return [
     healthTool,
     ...createAccountPipelineTools(options.kommoClientProvider),
-    ...createLeadTools(options.kommoClientProvider)
+    ...createLeadTools(options.kommoClientProvider),
+    ...createContactTools(options.kommoClientProvider)
   ];
 }
 

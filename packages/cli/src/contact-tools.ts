@@ -41,7 +41,9 @@ export function createContactTools(
       },
       annotations: annotationsFromOperation("listContacts", "List Kommo contacts"),
       handler: async (args) => {
-        const contacts = await clientProvider().listContacts(parseListContactsInput(args));
+        const contacts = await clientProvider().listContacts(
+          parseListContactsInput(args)
+        );
         return jsonToolResult({ contacts: contacts.map(summarizeContact) });
       }
     },
@@ -59,11 +61,14 @@ export function createContactTools(
     {
       name: "create_contact",
       title: "Create Kommo contact",
-      description: "Cria um contato Kommo com nome, telefone e/ou email (campos básicos).",
+      description:
+        "Cria um contato Kommo com nome, telefone e/ou email (campos básicos).",
       inputSchema: contactMutationSchema(),
       annotations: annotationsFromOperation("createContacts", "Create Kommo contact"),
       handler: async (args) => {
-        const contact = await clientProvider().createContact(parseCreateContactInput(args));
+        const contact = await clientProvider().createContact(
+          parseCreateContactInput(args)
+        );
         return jsonToolResult({ contact: summarizeContact(contact) });
       }
     },
@@ -76,7 +81,10 @@ export function createContactTools(
       handler: async (args) => {
         const record = inputRecord(args);
         const id = requiredNumber(record, "id");
-        const contact = await clientProvider().updateContact(id, parseUpdateContactInput(record));
+        const contact = await clientProvider().updateContact(
+          id,
+          parseUpdateContactInput(record)
+        );
         return jsonToolResult({ contact: summarizeContact(contact) });
       }
     }
@@ -200,18 +208,26 @@ function jsonToolResult(structuredContent: Record<string, unknown>): CallToolRes
   };
 }
 
-function inputRecord(args: Record<string, unknown> | undefined): Record<string, unknown> {
+function inputRecord(
+  args: Record<string, unknown> | undefined
+): Record<string, unknown> {
   return args ?? {};
 }
 
-function optionalString(record: Record<string, unknown>, key: string): string | undefined {
+function optionalString(
+  record: Record<string, unknown>,
+  key: string
+): string | undefined {
   const value = record[key];
   if (value === undefined) return undefined;
   if (typeof value !== "string") throw new Error(`Campo ${key} deve ser string.`);
   return value;
 }
 
-function optionalNumber(record: Record<string, unknown>, key: string): number | undefined {
+function optionalNumber(
+  record: Record<string, unknown>,
+  key: string
+): number | undefined {
   const value = record[key];
   if (value === undefined) return undefined;
   if (typeof value !== "number" || !Number.isFinite(value))

@@ -95,7 +95,9 @@ describe("contact tools", () => {
       arguments: { name: "Diana", phone: "+5511", email: "d@x.com" }
     });
     expect(res.isError).toBeFalsy();
-    expect(res.structuredContent).toMatchObject({ contact: { id: 100, name: "Diana" } });
+    expect(res.structuredContent).toMatchObject({
+      contact: { id: 100, name: "Diana" }
+    });
     await client.close();
   });
 
@@ -113,5 +115,19 @@ describe("contact tools", () => {
     });
     expect(res.isError).toBe(true);
     await client.close();
+  });
+
+  it("default registry includes contact tools", async () => {
+    const { createDefaultToolRegistry } = await import("../src/index.js");
+    const tools = createDefaultToolRegistry();
+    const names = tools.map((t) => t.name);
+    expect(names).toEqual(
+      expect.arrayContaining([
+        "list_contacts",
+        "get_contact",
+        "create_contact",
+        "update_contact"
+      ])
+    );
   });
 });

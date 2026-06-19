@@ -88,11 +88,11 @@ export interface MoveLeadInput {
 export interface KommoCustomFieldValue {
   readonly field_id?: number;
   readonly field_code?: string;
-  readonly values: ReadonlyArray<{
+  readonly values: readonly {
     readonly value: string;
     readonly enum_id?: number;
     readonly enum_code?: string;
-  }>;
+  }[];
 }
 
 export interface KommoContact {
@@ -357,10 +357,10 @@ interface KommoContactPayload {
   first_name?: string;
   last_name?: string;
   responsible_user_id?: number;
-  custom_fields_values?: Array<{
+  custom_fields_values?: {
     field_code: string;
-    values: Array<{ value: string }>;
-  }>;
+    values: { value: string }[];
+  }[];
 }
 
 function toKommoContactPayload(

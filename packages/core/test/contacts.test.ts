@@ -61,9 +61,7 @@ describe("KommoClient contacts", () => {
   });
 
   it("gets a contact by id", async () => {
-    const fetchMock = mockFetch([
-      jsonResponse(200, { id: 42, name: "Carlos" })
-    ]);
+    const fetchMock = mockFetch([jsonResponse(200, { id: 42, name: "Carlos" })]);
     const client = createKommoClient(
       { subdomain: "acme", accessToken: "token" },
       { fetch: fetchMock }
@@ -119,9 +117,7 @@ describe("KommoClient contacts", () => {
   });
 
   it("updates a contact name via PATCH", async () => {
-    const fetchMock = mockFetch([
-      jsonResponse(200, { id: 88, name: "Novo Nome" })
-    ]);
+    const fetchMock = mockFetch([jsonResponse(200, { id: 88, name: "Novo Nome" })]);
     const client = createKommoClient(
       { subdomain: "acme", accessToken: "token" },
       { fetch: fetchMock }
