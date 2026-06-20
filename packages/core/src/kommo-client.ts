@@ -85,6 +85,54 @@ export interface MoveLeadInput {
   readonly statusId: number;
 }
 
+export interface KommoCustomFieldValue {
+  readonly field_id?: number;
+  readonly field_code?: string;
+  readonly values: readonly {
+    readonly value: string;
+    readonly enum_id?: number;
+    readonly enum_code?: string;
+  }[];
+}
+
+export interface KommoContact {
+  readonly id: number;
+  readonly name?: string;
+  readonly first_name?: string;
+  readonly last_name?: string;
+  readonly responsible_user_id?: number;
+  readonly created_by?: number;
+  readonly updated_by?: number;
+  readonly created_at?: number;
+  readonly updated_at?: number;
+  readonly custom_fields_values?: readonly KommoCustomFieldValue[];
+  readonly _links?: HalLinks;
+}
+
+export interface ListContactsOptions extends PaginateOptions {
+  readonly query?: string;
+  readonly responsibleUserId?: number;
+  readonly with?: string;
+}
+
+export interface CreateContactInput {
+  readonly name?: string;
+  readonly firstName?: string;
+  readonly lastName?: string;
+  readonly responsibleUserId?: number;
+  readonly phone?: string;
+  readonly email?: string;
+}
+
+export interface UpdateContactInput {
+  readonly name?: string;
+  readonly firstName?: string;
+  readonly lastName?: string;
+  readonly responsibleUserId?: number;
+  readonly phone?: string;
+  readonly email?: string;
+}
+
 interface KommoLeadPayload {
   name?: string;
   price?: number;
@@ -174,6 +222,51 @@ export class KommoClient {
       statusId: input.statusId
     });
   }
+
+  async listContacts(options: ListContactsOptions = {}): Promise<KommoContact[]> {
+    const operation = KOMMO_API_CONTRACT.operations.listContacts;
+    const paginateOptions = {
+      limit: options.limit ?? KOMMO_API_CONTRACT.limits.maxPageLimit,
+      maxPages: options.maxPages ?? 10,
+      ...(options.startPage !== undefined ? { startPage: options.startPage } : {})
+    };
+    const baseQuery = buildContactListQuery(options);
+
+    return paginateHal(
+      (page, limit) =>
+        this.httpClient.get<HalCollection<KommoContact>>(operation.path, {
+          query: { ...baseQuery, page, limit }
+        }),
+      operation.embeddedKey,
+      paginateOptions
+    );
+  }
+
+  async getContact(id: number, withParam?: string): Promise<KommoContact> {
+    const operation = KOMMO_API_CONTRACT.operations.getContact;
+    const query = withParam === undefined ? undefined : { with: withParam };
+    return this.httpClient.get<KommoContact>(
+      renderKommoApiPath(operation.path, { id }),
+      query === undefined ? {} : { query }
+    );
+  }
+
+  async createContact(input: CreateContactInput): Promise<KommoContact> {
+    const operation = KOMMO_API_CONTRACT.operations.createContacts;
+    const response = await this.httpClient.post<HalCollection<KommoContact>>(
+      operation.path,
+      [toKommoContactPayload(input)]
+    );
+    return firstEmbeddedItem(response, operation.embeddedKey, "contato criado");
+  }
+
+  async updateContact(id: number, input: UpdateContactInput): Promise<KommoContact> {
+    const operation = KOMMO_API_CONTRACT.operations.updateContact;
+    return this.httpClient.patch<KommoContact>(
+      renderKommoApiPath(operation.path, { id }),
+      toKommoContactPayload(input)
+    );
+  }
 }
 
 /** Cria o cliente Kommo a partir de uma config já validada. */
@@ -221,6 +314,22 @@ function buildLeadListQuery(
   return query;
 }
 
+function buildContactListQuery(
+  options: ListContactsOptions
+): Record<string, string | number | boolean | undefined> {
+  const query: Record<string, string | number | boolean | undefined> = {};
+  if (options.query !== undefined) {
+    query["query"] = options.query;
+  }
+  if (options.with !== undefined) {
+    query["with"] = options.with;
+  }
+  if (options.responsibleUserId !== undefined) {
+    query["filter[responsible_user_id][]"] = options.responsibleUserId;
+  }
+  return query;
+}
+
 function toKommoLeadPayload(
   input: CreateLeadInput | UpdateLeadInput
 ): KommoLeadPayload {
@@ -239,6 +348,47 @@ function toKommoLeadPayload(
   }
   if (input.responsibleUserId !== undefined) {
     payload.responsible_user_id = input.responsibleUserId;
+  }
+  return payload;
+}
+
+interface KommoContactPayload {
+  name?: string;
+  first_name?: string;
+  last_name?: string;
+  responsible_user_id?: number;
+  custom_fields_values?: {
+    field_code: string;
+    values: { value: string }[];
+  }[];
+}
+
+function toKommoContactPayload(
+  input: CreateContactInput | UpdateContactInput
+): KommoContactPayload {
+  const payload: KommoContactPayload = {};
+  if (input.name !== undefined) {
+    payload.name = input.name;
+  }
+  if (input.firstName !== undefined) {
+    payload.first_name = input.firstName;
+  }
+  if (input.lastName !== undefined) {
+    payload.last_name = input.lastName;
+  }
+  if (input.responsibleUserId !== undefined) {
+    payload.responsible_user_id = input.responsibleUserId;
+  }
+
+  const customFields: KommoContactPayload["custom_fields_values"] = [];
+  if (input.phone !== undefined) {
+    customFields.push({ field_code: "PHONE", values: [{ value: input.phone }] });
+  }
+  if (input.email !== undefined) {
+    customFields.push({ field_code: "EMAIL", values: [{ value: input.email }] });
+  }
+  if (customFields.length > 0) {
+    payload.custom_fields_values = customFields;
   }
   return payload;
 }

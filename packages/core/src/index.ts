@@ -47,7 +47,12 @@ export type {
   CreateLeadInput,
   ListLeadsOptions,
   MoveLeadInput,
-  UpdateLeadInput
+  UpdateLeadInput,
+  KommoContact,
+  KommoCustomFieldValue,
+  ListContactsOptions,
+  CreateContactInput,
+  UpdateContactInput
 } from "./kommo-client.js";
 export {
   KommoClient,

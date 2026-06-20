@@ -1,7 +1,7 @@
 # Spec 006: Tools — Contatos (CRUD)
 
 - **Épico:** E1 — Core MCP + CRM núcleo (M1)
-- **Status:** Draft
+- **Status:** Implemented
 - **Relacionada a:** PRD §5.2 (núcleo), §5.3; ADR-0003
 - **Estimativa:** M
 
@@ -30,22 +30,22 @@ completando, com as specs 004 e 005, o DoD mínimo do M1.
 
 ## Tarefas
 
-- [ ] `list_contacts` — filtros (query, paginação); resultado enxuto (id, nome,
+- [x] `list_contacts` — filtros (query, paginação); resultado enxuto (id, nome,
   telefone/email principais, responsável).
-- [ ] `get_contact` — detalhe por id.
-- [ ] `create_contact` — cria com campos básicos; retorna id.
-- [ ] `update_contact` — atualiza campos básicos por id.
-- [ ] Anotações e `inputSchema` corretos.
-- [ ] Testes com Kommo mockado: cada operação + erro 422 → `isError`.
+- [x] `get_contact` — detalhe por id.
+- [x] `create_contact` — cria com campos básicos; retorna id.
+- [x] `update_contact` — atualiza campos básicos por id.
+- [x] Anotações e `inputSchema` corretos.
+- [x] Testes com Kommo mockado: cada operação + erro 422 → `isError`.
 
 ## Critérios de aceite (testáveis)
 
-- [ ] `list_contacts` pagina/filtra e retorna a forma enxuta esperada.
-- [ ] `create_contact` cria e retorna id; aparece num `get_contact` subsequente.
-- [ ] `update_contact` altera um campo e reflete a mudança.
-- [ ] Anotações corretas em `tools/list`.
+- [x] `list_contacts` pagina/filtra e retorna a forma enxuta esperada.
+- [x] `create_contact` cria e retorna id; aparece num `get_contact` subsequente.
+- [x] `update_contact` altera um campo e reflete a mudança.
+- [x] Anotações corretas em `tools/list`.
 - [ ] Validado em cliente MCP real: a IA cria e edita um contato por instrução em
-  linguagem natural.
+  linguagem natural. _(pendente — critério delegado à spec 007: smoke E2E)_
 
 ## Fora de escopo / riscos
 
